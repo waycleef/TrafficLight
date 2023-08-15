@@ -12,7 +12,22 @@ class ViewController: UIViewController {
     @IBOutlet var redLight: UIView!
     @IBOutlet var orangeLight: UIView!
     @IBOutlet var greenLight: UIView!
+    
     @IBOutlet var startButton: UIButton!
+    
+    private var currentLight = CurrentLight.red
+    private let lightIsOn: CGFloat = 1
+    private let lightIsOff: CGFloat = 0.3
+        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        redLight.alpha = lightIsOff
+        orangeLight.alpha = lightIsOff
+        greenLight.alpha = lightIsOff
+        
+        startButton.layer.cornerRadius = 10
+    }
     
     override func viewWillLayoutSubviews() {
         let radius = redLight.frame.width / 2
@@ -22,33 +37,39 @@ class ViewController: UIViewController {
         greenLight.layer.cornerRadius = radius
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        redLight.alpha = 0.3
-        orangeLight.alpha = 0.3
-        greenLight.alpha = 0.3
-        
-        startButton.layer.cornerRadius = 10
-    }
-    
     @IBAction func startButtonTapped() {
-        startButton.setTitle("Next", for: .normal)
+        if startButton.currentTitle == "Start" {
+            startButton.setTitle("Next", for: .normal)
+        }
         
-        if round(redLight.alpha * 10) / 10 == 0.3 && round(orangeLight.alpha * 10) / 10 == 0.3 && round(greenLight.alpha * 10) / 10 == 0.3 {
-            redLight.alpha = 1
-        } else if round(redLight.alpha * 10) / 10 == 1 && round(orangeLight.alpha * 10) / 10 == 0.3 && round(greenLight.alpha * 10) / 10 == 0.3 {
-            redLight.alpha = 0.3
-            orangeLight.alpha = 1
-        } else if round(redLight.alpha * 10) / 10 == 0.3 && round(orangeLight.alpha * 10) / 10 == 1 && round(greenLight.alpha * 10) / 10 == 0.3 {
-            orangeLight.alpha = 0.3
-            greenLight.alpha = 1
-        } else {
+        switch currentLight {
+        case .red:
+            greenLight.alpha =  lightIsOff
+            redLight.alpha = lightIsOn
+            currentLight = .yellow
+        case .yellow:
+            redLight.alpha = lightIsOff
+            orangeLight.alpha = lightIsOn
+            currentLight = .green
+        case .green:
+            greenLight.alpha = lightIsOn
+            orangeLight.alpha = lightIsOff
+            currentLight = .off
+        case .off:
+            currentLight = .red
+            redLight.alpha = lightIsOff
+            orangeLight.alpha = lightIsOff
+            greenLight.alpha = lightIsOff
             startButton.setTitle("Start", for: .normal)
-            greenLight.alpha = 0.3
         }
     }
     
-
 }
 
+// MARK: - Current Light
+
+extension ViewController {
+    enum CurrentLight {
+        case red, yellow, green, off
+    }
+}
