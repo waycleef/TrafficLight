@@ -8,5 +8,4 @@
 3. Кастомизация кнопки Default
 
 # Screenshots
-![ipshoneIPhone](https://github.com/waycleef/TrafficLight/blob/main/IPhone14ProMax.mov)
-![iPhoneSE](https://github.com/waycleef/TrafficLight/blob/main/IPhoneSE.mov)
+![ipshoneIPhone](https://github.com/waycleef/TrafficLight/blob/main/IPhone14ProMax.mov) ![iPhoneSE](https://github.com/waycleef/TrafficLight/blob/main/IPhoneSE.mov)
